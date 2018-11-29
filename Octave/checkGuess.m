@@ -1,3 +1,5 @@
+% Simple function that compares two numerical arguments, and returns true if they're equal, and false otherwise
+% Additionally, it displays a message to the user if their guess is too high or too low
 function correctGuess = checkGuess(guessNum, targetNum)
     correctGuess = false;
     if(guessNum>targetNum)
