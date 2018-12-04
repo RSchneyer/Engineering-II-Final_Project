@@ -13,6 +13,7 @@ guessCounter = 0;      % Amount of incorrect guesses, resets on new game
 guessCountTarget = 10; % Initial amount of incorrect guesses until target number gets reset
 resetCount = 0;        % Amount of times the target number has been reset
 playAgain = 0;         % Used for input to continue playing after user has finished game
+userName = "AAA";
 
 % Initialize target number
 targetNum = randGen();
@@ -21,7 +22,7 @@ while(stillPlaying)
     dispNumAndString("Target num is: ", targetNum);
     % gameOver is false while the user hasn't guessed the correct number
     while(!gameOver)
-        userGuess = input("Guess the random number: ");
+        userGuess = input("Guess the random number (between 2 an 200): ");
         if(checkGuess(userGuess, targetNum))
             % User guessed the correct number, reset flags and print guess count
             guessCounter++;
@@ -42,16 +43,23 @@ while(stillPlaying)
     end
     
     % Check if latest score is the new high score, and set the high score accordingly
-    highScore = returnHighScore(guessCounter, highScore);
+    if(guessCounter<=highScore)
+        userName = getInitials();
+    end
+    highScore  = returnHighScore(guessCounter, highScore);
     
     % Ask if user wants to play again
-    playAgain = input("Press 1 to play again, or anything else to quit");
+    % Octave has this shit built in
+    playAgain = yes_or_no("Do you wanna play again?");
+    
     if(playAgain ~= 1)
         % User doesn't want to play again, print high score, and set playAgain to false to exit outer while loop
         stillPlaying = false;
-        dispNumAndString("High score was: ", highScore);
+        dispNumAndString("High score was: ", highScore, " set by ", userName);
+	disp("It was nice knowing ya!");
     else
         % User wants to play again, reset appropriate variables
+        disp("Here we go again!!\n\n");
         gameOver = false;
         guessCountTarget = 10;
         guessCounter = 0;
